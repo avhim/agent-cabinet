@@ -27,8 +27,8 @@ class Agency(models.Model):
     def __str__(self):
         return self.title
     
-    def set_agent_true(self):
-        self.user.is_agent = True
+    # def set_agent_true(self):
+    #     self.user.is_agent = True
 
     # def get_absolute_url(self):
     #     return reverse('agency-profile', kwargs={'slug': self.title})
