@@ -53,6 +53,9 @@ INSTALLED_APPS = [
 
     'corsheaders',
 
+    'easy_thumbnails',
+    'filer',
+
     'agents',
     'tours',
     'useraccount',
@@ -217,3 +220,11 @@ INTERNAL_IPS = [
     "127.0.0.1",
     # ...
 ]
+
+THUMBNAIL_PROCESSORS = (
+    'easy_thumbnails.processors.colorspace',
+    'easy_thumbnails.processors.autocrop',
+    #'easy_thumbnails.processors.scale_and_crop',
+    'filer.thumbnail_processors.scale_and_crop_with_subject_location',
+    'easy_thumbnails.processors.filters',
+)

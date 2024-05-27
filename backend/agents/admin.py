@@ -7,7 +7,7 @@ class AgencyAdmin(admin.ModelAdmin):
     list_display = ["title", "timestamp", "active"]
     list_display_links = ["title"]
     list_editable = ["active"]
-    list_filter = ["active"]
+    list_filter = ["active", "unp", "title"]
     search_fields = ('title', 'unp', )
 
     class Meta:

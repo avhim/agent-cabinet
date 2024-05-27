@@ -1,6 +1,9 @@
 from django.db import models
 from django.urls import reverse
 from django.conf import settings
+
+from filer.fields.image import FilerImageField
+
 from useraccount.models import User
 # from django.contrib.contenttypes.fields import GenericRelation
 
@@ -31,12 +34,13 @@ class Tour(models.Model):
     active = models.BooleanField(default=False, verbose_name='Отображать')
     title = models.CharField(max_length=128, verbose_name='Название тура')
     slug = models.SlugField(unique=True, verbose_name='Ссылка на тур')
-    user = models.ForeignKey(User, null=True, blank=True, on_delete=models.DO_NOTHING)
+    user = models.ForeignKey(User, null=True, blank=True, on_delete=models.DO_NOTHING, related_name="tour_creator")
 
     seo_keywords = models.TextField(null=True, blank=True, verbose_name="SEO слова")
     seo_description = models.TextField(null=True, blank=True, verbose_name="SEO описание")
 
-    img = models.ImageField(upload_to=tours_img_upload)
+    img = FilerImageField(null=True, blank=True, related_name="tour_image", on_delete=models.DO_NOTHING)
+    # img = models.ImageField(upload_to=tours_img_upload)
     # img = ResizedImageField(upload_to=tours_img_upload)
     first_title = models.TextField(null=True, blank=True, verbose_name="Заголовок на изображении")
     second_title = models.TextField(null=True, blank=True, verbose_name="краткое описание")
@@ -113,7 +117,7 @@ class TourDayQuota(models.Model):
     active = models.BooleanField(default=False, verbose_name="Активная дата")
     tour_date = models.DateField(null=True, verbose_name="Дата тура")
     total_quotas = models.PositiveIntegerField(null=True, blank=True, verbose_name="Всего мест")
-    # active_quotas = models.PositiveIntegerField(verbose_name="Оставшиеся места")
+    active_quotas = models.PositiveIntegerField(verbose_name="Оставшиеся места")
     sold_quotas = models.PositiveIntegerField(default=0, verbose_name="Проданные места")
     price_adult = models.DecimalField(max_digits=7, decimal_places=2, verbose_name="Цена взрослый")
     price_child = models.DecimalField(max_digits=7, decimal_places=2, verbose_name="Цена детский")
